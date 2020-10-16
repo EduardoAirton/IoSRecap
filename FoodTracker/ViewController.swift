@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //MARK:Properties
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var mealNameLabel: UILabel!
+    @IBOutlet var mealNameLabel: UILabel!
     @IBOutlet weak var mealImage: UIImageView!
 
     override func viewDidLoad() {
@@ -39,11 +39,13 @@ class ViewController: UIViewController,UITextFieldDelegate, UIImagePickerControl
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // The info dictionary may contain multiple representations of the image. You want to use the original.
+        
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else{
             fatalError("Expect the original but recive \(info)")
         }
+        
         self.mealImage.image = selectedImage
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
         
     }
     
@@ -52,6 +54,7 @@ class ViewController: UIViewController,UITextFieldDelegate, UIImagePickerControl
     @IBAction func selectImageLibrary(_ sender: UITapGestureRecognizer) {
         //Hide the keyboard
         nameTextField.resignFirstResponder()
+        
         //Create a picker controller whose into in the photoLibrary
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .photoLibrary
@@ -59,11 +62,11 @@ class ViewController: UIViewController,UITextFieldDelegate, UIImagePickerControl
         
         //Notify the view controller when use pickerController
         imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: false, completion: nil)
         
     }
     @IBAction func setDefaultLabelText(_ sender: Any) {
-        self.mealNameLabel.text = "Default Text"
+        self.mealNameLabel.text = "Botão inicial"
     }
     
     
